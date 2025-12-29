@@ -64,6 +64,19 @@ async function runAction(query) {
   helperText.textContent = "Showing definitions.";
 }
 
+function syncFromQuery() {
+  const params = new URLSearchParams(window.location.search);
+  const preset = params.get("q");
+
+  if (preset) {
+    searchInput.value = preset;
+    runAction(preset);
+  } else {
+    clearResults();
+    helperText.textContent = "Tip: Press Ctrl/Cmd + K to focus the search.";
+  }
+}
+
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const value = searchInput.value.trim();
@@ -86,13 +99,5 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-const params = new URLSearchParams(window.location.search);
-const preset = params.get("q");
-
-if (preset) {
-  searchInput.value = preset;
-  runAction(preset);
-} else {
-  clearResults();
-  helperText.textContent = "Tip: Press Ctrl/Cmd + K to focus the search.";
-}
+window.addEventListener("popstate", syncFromQuery);
+syncFromQuery();
