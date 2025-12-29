@@ -17,3 +17,4 @@ A slick, Google-inspired experience with a blue accent in always-on dark mode. Q
 1. Install dependencies: `npm install`.
 2. Run the desktop app in development: `npm start`.
 3. Build platform installers: `npm run build` (outputs to `dist/`; targets dmg, nsis, and AppImage by default).
+4. Installer naming: `MyWeb-${version}-${os}-${arch}.${ext}` (see `packages/INSTALLERS.md` for expected outputs).

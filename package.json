@@ -11,6 +11,7 @@
   "build": {
     "appId": "com.myweb.desktop",
     "productName": "MyWeb",
+    "artifactName": "MyWeb-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "dist"
     },
