@@ -19,9 +19,7 @@
           <span class="brand-sub">Slick, modern, and blue.</span>
         </div>
       </div>
-      <div class="actions">
-        <button class="pill secondary" id="helpButton">/ Commands</button>
-      </div>
+      <div class="actions"></div>
     </header>
 
     <main class="content">
@@ -37,10 +35,7 @@
           <form id="searchForm" class="search-form" autocomplete="off">
             <div class="input-wrap">
               <span class="icon">🔎</span>
-              <input id="searchInput" type="text" name="query" placeholder="Search anything or try /wiki space or /clear" required>
-              <div class="chips">
-                <button type="button" class="chip" data-command="/wiki ">Wiki</button>
-              </div>
+              <input id="searchInput" type="text" name="query" placeholder="Search Wikipedia..." required>
             </div>
             <div class="button-row">
               <button type="submit" class="pill primary">Go</button>
@@ -64,44 +59,8 @@
             <p>Start typing to explore definitions.</p>
           </div>
         </article>
-
-        <article class="panel" aria-live="polite">
-          <header class="panel-head">
-            <div>
-              <p class="eyebrow">Notes</p>
-              <h2>MyDocs</h2>
-            </div>
-            <span class="sparkle">🗒️</span>
-          </header>
-          <div class="panel-body">
-            <div class="doc-row">
-              <input type="text" id="docName" placeholder="Document name (used for /doc command)" aria-label="Document name">
-              <input type="file" id="docFile" accept=".mydoc">
-            </div>
-            <textarea id="docContent" class="doc-textarea" placeholder="Write your notes here..."></textarea>
-            <div class="doc-row">
-              <button type="button" class="pill primary" id="saveDoc">Save</button>
-              <button type="button" class="pill ghost" id="downloadDoc">Download .mydoc</button>
-            </div>
-            <p class="helper" id="docStatus">Use /doc [name] to jump to a saved note.</p>
-          </div>
-        </article>
       </section>
     </main>
-
-    <dialog id="commandDialog">
-      <div class="dialog">
-        <header>
-          <h3>/ Commands</h3>
-          <button id="closeDialog" class="icon-button" aria-label="Close">✕</button>
-        </header>
-        <ul class="command-list">
-          <li><strong>/wiki [topic]</strong><span>Search Wikipedia definitions</span></li>
-          <li><strong>/doc [name]</strong><span>Open or create a MyDoc note</span></li>
-          <li><strong>/clear</strong><span>Reset the search box and results</span></li>
-        </ul>
-      </div>
-    </dialog>
   </div>
 
   <script src="script.js"></script>

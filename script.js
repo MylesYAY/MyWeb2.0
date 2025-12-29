@@ -2,27 +2,9 @@ const searchForm = document.getElementById("searchForm");
 const searchInput = document.getElementById("searchInput");
 const definitionResults = document.getElementById("definitionResults");
 const helperText = document.getElementById("helperText");
-const helpButton = document.getElementById("helpButton");
-const commandDialog = document.getElementById("commandDialog");
-const closeDialog = document.getElementById("closeDialog");
 const clearButton = document.getElementById("clearButton");
-const chips = document.querySelectorAll(".chip");
-const docNameInput = document.getElementById("docName");
-const docContent = document.getElementById("docContent");
-const docStatus = document.getElementById("docStatus");
-const docFile = document.getElementById("docFile");
-const saveDocButton = document.getElementById("saveDoc");
-const downloadDocButton = document.getElementById("downloadDoc");
 
-const COMMANDS = {
-  wiki: "wiki",
-  doc: "doc",
-  clear: "clear",
-};
-
-function initializeTheme() {
-  document.documentElement.classList.add("dark");
-}
+document.documentElement.classList.add("dark");
 
 async function fetchDefinitions(query) {
   helperText.textContent = "Fetching Wikipedia definitions...";
@@ -70,96 +52,11 @@ function clearResults() {
   helperText.textContent = "Cleared.";
 }
 
-function caesarShift(str, shift) {
-  return Array.from(str)
-    .map((char) => String.fromCharCode(char.charCodeAt(0) + shift))
-    .join("");
-}
-
-function encryptDoc(content) {
-  const shifted = caesarShift(content, 3);
-  return btoa(shifted);
-}
-
-function decryptDoc(payload) {
-  try {
-    const shifted = atob(payload);
-    return caesarShift(shifted, -3);
-  } catch (e) {
-    console.error("Failed to decrypt doc", e);
-    return "";
-  }
-}
-
-function saveDoc(name, content) {
-  if (!name) {
-    docStatus.textContent = "Add a document name before saving.";
-    return;
-  }
-  const encoded = encryptDoc(content);
-  localStorage.setItem(`mydoc:${name}`, encoded);
-  docStatus.textContent = `Saved "${name}.mydoc" locally.`;
-}
-
-function loadDoc(name) {
-  const stored = localStorage.getItem(`mydoc:${name}`);
-  if (stored) {
-    docContent.value = decryptDoc(stored);
-    docStatus.textContent = `Loaded "${name}.mydoc" from storage.`;
-  } else {
-    docContent.value = "";
-    docStatus.textContent = `Started new doc "${name}.mydoc".`;
-  }
-  docNameInput.value = name;
-}
-
-function downloadDoc(name, content) {
-  if (!name) {
-    docStatus.textContent = "Add a document name to download.";
-    return;
-  }
-  const encoded = encryptDoc(content);
-  const blob = new Blob([encoded], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `${name}.mydoc`;
-  link.click();
-  URL.revokeObjectURL(url);
-  docStatus.textContent = `Downloaded "${name}.mydoc".`;
-}
-
-function parseCommand(raw) {
-  if (!raw.startsWith("/")) return null;
-  const [command, ...rest] = raw.trim().slice(1).split(" ");
-  return { command: command.toLowerCase(), payload: rest.join(" ").trim() };
-}
-
 async function runAction(query) {
-  const parsed = parseCommand(query);
-
-  if (parsed) {
-    switch (parsed.command) {
-      case COMMANDS.clear:
-        searchInput.value = "";
-        clearResults();
-        return;
-      case COMMANDS.doc:
-        if (parsed.payload) {
-          loadDoc(parsed.payload);
-        } else {
-          docStatus.textContent = "Add a document name after /doc.";
-        }
-        return;
-      case COMMANDS.wiki:
-      default:
-        if (parsed.payload) await fetchDefinitions(parsed.payload);
-        helperText.textContent = "Wiki command run.";
-        return;
-    }
-  }
-
   await fetchDefinitions(query);
+  const url = new URL(window.location.href);
+  url.searchParams.set("q", query);
+  window.history.replaceState({}, "", url.toString());
   helperText.textContent = "Showing definitions.";
 }
 
@@ -217,8 +114,13 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-initializeTheme();
 clearResults();
 helperText.textContent =
-  "Tip: Use /wiki, /doc [name], or /clear. Press Ctrl/Cmd + K to focus the search.";
-docStatus.textContent = "Use /doc [name] to jump to a saved note.";
+  "Tip: Press Ctrl/Cmd + K to focus the search.";
+
+const params = new URLSearchParams(window.location.search);
+const preset = params.get("q");
+if (preset) {
+  searchInput.value = preset;
+  runAction(preset);
+}
