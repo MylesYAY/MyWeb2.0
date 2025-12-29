@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyWeb | Search Everything</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="top-bar">
+      <div class="brand">
+        <div class="logo">M</div>
+        <div class="brand-text">
+          <span class="brand-name">MyWeb</span>
+          <span class="brand-sub">Slick, modern, and blue.</span>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="mode-toggle">
+          <input type="checkbox" id="themeToggle" aria-label="Toggle theme">
+          <label for="themeToggle" class="toggle">
+            <span class="thumb"></span>
+            <span class="icon sun">☀</span>
+            <span class="icon moon">🌙</span>
+          </label>
+        </div>
+        <button class="pill secondary" id="helpButton">/ Commands</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="hero">
+        <div class="hero-title">
+          <span class="gradient">Discover</span>
+          <span>with MyWeb</span>
+        </div>
+        <p class="hero-subtitle">
+          Search Wikipedia definitions, find images, or speed-run tasks with /commands—styled with a blue accent and a Google-inspired layout.
+        </p>
+        <div class="search-card">
+          <form id="searchForm" class="search-form" autocomplete="off">
+            <div class="input-wrap">
+              <span class="icon">🔎</span>
+              <input id="searchInput" type="text" name="query" placeholder="Search anything or try /wiki space, /image aurora, /dark, /light, /clear" required>
+              <div class="chips">
+                <button type="button" class="chip" data-command="/wiki ">Wiki</button>
+                <button type="button" class="chip" data-command="/image ">Images</button>
+                <button type="button" class="chip" data-command="/both ">Both</button>
+                <button type="button" class="chip" data-command="/dark">Dark</button>
+              </div>
+            </div>
+            <div class="button-row">
+              <button type="submit" class="pill primary">Go</button>
+              <button type="button" id="clearButton" class="pill ghost">Clear</button>
+            </div>
+          </form>
+          <div class="helper" id="helperText"></div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="panel" aria-live="polite">
+          <header class="panel-head">
+            <div>
+              <p class="eyebrow">Definitions</p>
+              <h2>Wikipedia Search</h2>
+            </div>
+            <span class="sparkle">✨</span>
+          </header>
+          <div id="definitionResults" class="panel-body empty">
+            <p>Start typing to explore definitions.</p>
+          </div>
+        </article>
+
+        <article class="panel" aria-live="polite">
+          <header class="panel-head">
+            <div>
+              <p class="eyebrow">Imagery</p>
+              <h2>Media Search</h2>
+            </div>
+            <span class="sparkle">🖼️</span>
+          </header>
+          <div id="imageResults" class="panel-body empty images">
+            <p>Find inspiration with image search.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <dialog id="commandDialog">
+      <div class="dialog">
+        <header>
+          <h3>/ Commands</h3>
+          <button id="closeDialog" class="icon-button" aria-label="Close">✕</button>
+        </header>
+        <ul class="command-list">
+          <li><strong>/wiki [topic]</strong><span>Search Wikipedia definitions</span></li>
+          <li><strong>/image [topic]</strong><span>Search images</span></li>
+          <li><strong>/both [topic]</strong><span>Run definitions and images together</span></li>
+          <li><strong>/dark</strong><span>Switch to dark mode</span></li>
+          <li><strong>/light</strong><span>Switch to light mode</span></li>
+          <li><strong>/clear</strong><span>Reset the search box and results</span></li>
+        </ul>
+      </div>
+    </dialog>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
