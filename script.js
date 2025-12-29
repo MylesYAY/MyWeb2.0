@@ -7,6 +7,10 @@ const clearButton = document.getElementById("clearButton");
 document.documentElement.classList.add("dark");
 
 async function fetchDefinitions(query) {
+  if (!query) {
+    clearResults();
+    return;
+  }
   helperText.textContent = "Fetching Wikipedia definitions...";
   definitionResults.innerHTML = "";
   definitionResults.classList.remove("empty");
@@ -67,44 +71,12 @@ searchForm.addEventListener("submit", (event) => {
   runAction(value);
 });
 
-helpButton.addEventListener("click", () => commandDialog.showModal());
-closeDialog.addEventListener("click", () => commandDialog.close());
 clearButton.addEventListener("click", () => {
   searchInput.value = "";
+  const url = new URL(window.location.href);
+  url.searchParams.delete("q");
+  window.history.replaceState({}, "", url.toString());
   clearResults();
-});
-
-saveDocButton.addEventListener("click", () => {
-  const name = docNameInput.value.trim() || "untitled";
-  saveDoc(name, docContent.value);
-});
-
-downloadDocButton.addEventListener("click", () => {
-  const name = docNameInput.value.trim() || "untitled";
-  downloadDoc(name, docContent.value);
-});
-
-docFile.addEventListener("change", (event) => {
-  const file = event.target.files?.[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    const encoded = reader.result.toString();
-    const name = file.name.replace(/\.mydoc$/i, "") || "imported";
-    docNameInput.value = name;
-    docContent.value = decryptDoc(encoded);
-    saveDoc(name, docContent.value);
-    docStatus.textContent = `Imported "${file.name}" and saved locally.`;
-  };
-  reader.readAsText(file);
-});
-
-chips.forEach((chip) => {
-  chip.addEventListener("click", () => {
-    const cmd = chip.getAttribute("data-command");
-    searchInput.value = cmd;
-    searchInput.focus();
-  });
 });
 
 document.addEventListener("keydown", (event) => {
@@ -114,13 +86,13 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-clearResults();
-helperText.textContent =
-  "Tip: Press Ctrl/Cmd + K to focus the search.";
-
 const params = new URLSearchParams(window.location.search);
 const preset = params.get("q");
+
 if (preset) {
   searchInput.value = preset;
   runAction(preset);
+} else {
+  clearResults();
+  helperText.textContent = "Tip: Press Ctrl/Cmd + K to focus the search.";
 }
