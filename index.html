@@ -39,18 +39,15 @@
           <span>with MyWeb</span>
         </div>
         <p class="hero-subtitle">
-          Search Wikipedia definitions, find images, or speed-run tasks with /commands—styled with a blue accent and a Google-inspired layout.
+          Search Wikipedia definitions or speed-run tasks with /commands—styled with a blue accent and a Google-inspired layout.
         </p>
         <div class="search-card">
           <form id="searchForm" class="search-form" autocomplete="off">
             <div class="input-wrap">
               <span class="icon">🔎</span>
-              <input id="searchInput" type="text" name="query" placeholder="Search anything or try /wiki space, /image aurora, /dark, /light, /clear" required>
+              <input id="searchInput" type="text" name="query" placeholder="Search anything or try /wiki space or /clear" required>
               <div class="chips">
                 <button type="button" class="chip" data-command="/wiki ">Wiki</button>
-                <button type="button" class="chip" data-command="/image ">Images</button>
-                <button type="button" class="chip" data-command="/both ">Both</button>
-                <button type="button" class="chip" data-command="/dark">Dark</button>
               </div>
             </div>
             <div class="button-row">
@@ -75,19 +72,6 @@
             <p>Start typing to explore definitions.</p>
           </div>
         </article>
-
-        <article class="panel" aria-live="polite">
-          <header class="panel-head">
-            <div>
-              <p class="eyebrow">Imagery</p>
-              <h2>Media Search</h2>
-            </div>
-            <span class="sparkle">🖼️</span>
-          </header>
-          <div id="imageResults" class="panel-body empty images">
-            <p>Find inspiration with image search.</p>
-          </div>
-        </article>
       </section>
     </main>
 
@@ -99,10 +83,6 @@
         </header>
         <ul class="command-list">
           <li><strong>/wiki [topic]</strong><span>Search Wikipedia definitions</span></li>
-          <li><strong>/image [topic]</strong><span>Search images</span></li>
-          <li><strong>/both [topic]</strong><span>Run definitions and images together</span></li>
-          <li><strong>/dark</strong><span>Switch to dark mode</span></li>
-          <li><strong>/light</strong><span>Switch to light mode</span></li>
           <li><strong>/clear</strong><span>Reset the search box and results</span></li>
         </ul>
       </div>

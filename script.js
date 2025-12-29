@@ -1,7 +1,6 @@
 const searchForm = document.getElementById("searchForm");
 const searchInput = document.getElementById("searchInput");
 const definitionResults = document.getElementById("definitionResults");
-const imageResults = document.getElementById("imageResults");
 const helperText = document.getElementById("helperText");
 const themeToggle = document.getElementById("themeToggle");
 const helpButton = document.getElementById("helpButton");
@@ -12,10 +11,6 @@ const chips = document.querySelectorAll(".chip");
 
 const COMMANDS = {
   wiki: "wiki",
-  image: "image",
-  both: "both",
-  dark: "dark",
-  light: "light",
   clear: "clear",
 };
 
@@ -76,60 +71,9 @@ async function fetchDefinitions(query) {
   }
 }
 
-async function fetchImages(query) {
-  helperText.textContent = "Looking for images...";
-  imageResults.innerHTML = "";
-  imageResults.classList.remove("empty");
-
-  const url = `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrsearch=${encodeURIComponent(
-    query
-  )}&gsrlimit=12&prop=imageinfo&iiprop=url|mime&iiurlwidth=600`;
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    const pages = data?.query?.pages;
-    if (!pages) {
-      imageResults.classList.add("empty");
-      imageResults.innerHTML = "<p>No images found yet.</p>";
-      return;
-    }
-
-    const items = Object.values(pages).filter(
-      (page) => page.imageinfo && page.imageinfo.length > 0
-    );
-
-    if (!items.length) {
-      imageResults.classList.add("empty");
-      imageResults.innerHTML = "<p>No images found yet.</p>";
-      return;
-    }
-
-    const fragment = document.createDocumentFragment();
-    items.slice(0, 10).forEach((item) => {
-      const { thumburl, url: fullUrl } = item.imageinfo[0];
-      const div = document.createElement("div");
-      div.className = "image-card";
-      div.innerHTML = `
-        <img src="${thumburl}" alt="${item.title}">
-        <div class="caption">${item.title.replace(/File:/, "")}</div>
-        <a href="${fullUrl}" target="_blank" rel="noreferrer" class="caption" style="display:none;">open</a>
-      `;
-      fragment.appendChild(div);
-    });
-    imageResults.appendChild(fragment);
-  } catch (error) {
-    imageResults.classList.add("empty");
-    imageResults.innerHTML = `<p>Could not load images. Try again.</p>`;
-    console.error(error);
-  }
-}
-
 function clearResults() {
   definitionResults.innerHTML = "<p>Start typing to explore definitions.</p>";
-  imageResults.innerHTML = "<p>Find inspiration with image search.</p>";
   definitionResults.classList.add("empty");
-  imageResults.classList.add("empty");
   helperText.textContent = "Cleared.";
 }
 
@@ -144,30 +88,9 @@ async function runAction(query) {
 
   if (parsed) {
     switch (parsed.command) {
-      case COMMANDS.dark:
-        setTheme("dark");
-        helperText.textContent = "Dark mode on.";
-        return;
-      case COMMANDS.light:
-        setTheme("light");
-        helperText.textContent = "Light mode on.";
-        return;
       case COMMANDS.clear:
         searchInput.value = "";
         clearResults();
-        return;
-      case COMMANDS.image:
-        if (parsed.payload) await fetchImages(parsed.payload);
-        helperText.textContent = "Image command run.";
-        return;
-      case COMMANDS.both:
-        if (parsed.payload) {
-          await Promise.all([
-            fetchDefinitions(parsed.payload),
-            fetchImages(parsed.payload),
-          ]);
-          helperText.textContent = "Definitions + images loaded.";
-        }
         return;
       case COMMANDS.wiki:
       default:
@@ -177,8 +100,8 @@ async function runAction(query) {
     }
   }
 
-  await Promise.all([fetchDefinitions(query), fetchImages(query)]);
-  helperText.textContent = "Showing combined results.";
+  await fetchDefinitions(query);
+  helperText.textContent = "Showing definitions.";
 }
 
 searchForm.addEventListener("submit", (event) => {
@@ -217,4 +140,4 @@ document.addEventListener("keydown", (event) => {
 loadTheme();
 clearResults();
 helperText.textContent =
-  "Tip: Use /wiki, /image, /both, /dark, /light, /clear or press Ctrl/Cmd + K to focus.";
+  "Tip: Use /wiki or /clear, and toggle the theme in the header. Press Ctrl/Cmd + K to focus the search.";
