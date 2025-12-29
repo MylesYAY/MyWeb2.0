@@ -1,6 +1,6 @@
 # MyWeb2.0
 
-A slick, Google-inspired experience with a blue accent. Search Wikipedia definitions and use `/commands` to multitask quickly—all with light and dark themes.
+A slick, Google-inspired experience with a blue accent in always-on dark mode. Search Wikipedia definitions, take notes with MyDocs, and use `/commands` to multitask quickly.
 
 ## Getting started
 
@@ -8,6 +8,9 @@ A slick, Google-inspired experience with a blue accent. Search Wikipedia definit
 2. Use the central search bar:
    - Type anything to search Wikipedia definitions.
    - `/wiki topic` for definitions only.
+   - `/doc name` to open or create a MyDoc note.
    - `/clear` to reset the UI.
-   - Toggle light/dark mode via the switch in the header.
-3. Keyboard: press <kbd>Ctrl/Cmd + K</kbd> to focus the search box.
+3. MyDocs:
+   - Enter a name and write notes; click **Save** to store encrypted content locally, or **Download .mydoc** to export (Caesar cipher + Base64).
+   - Use the file picker to import a `.mydoc` file; it will be decrypted and stored locally.
+4. Keyboard: press <kbd>Ctrl/Cmd + K</kbd> to focus the search box.
