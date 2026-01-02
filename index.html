@@ -7,9 +7,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <canvas id="trail-canvas"></canvas>
   <div class="page">
     <header class="top-bar">
       <div class="brand">
@@ -47,7 +49,7 @@
       </section>
 
       <section class="grid">
-        <article class="panel" aria-live="polite">
+        <article class="panel boxed" aria-live="polite">
           <header class="panel-head">
             <div>
               <p class="eyebrow">Definitions</p>
@@ -55,33 +57,26 @@
             </div>
             <span class="sparkle">✨</span>
           </header>
-          <div id="definitionResults" class="panel-body empty">
+          <div id="definitionResults" class="panel-body empty boxed">
             <p>Start typing to explore definitions.</p>
           </div>
         </article>
 
-        <article class="panel" aria-live="polite">
-          <header class="panel-head">
-            <div>
-              <p class="eyebrow">Desktop</p>
-              <h2>Installers</h2>
-            </div>
-            <span class="sparkle">💻</span>
-          </header>
-          <div class="panel-body">
-            <p class="helper">Build artifacts are created in <code>dist/</code> via <code>npm run build</code>.</p>
-            <div class="download-list">
-              <div class="download-item">
-                <span>macOS (dmg)</span>
-                <code>MyWeb-${"{version}"}-mac-${"{arch}"}.dmg</code>
+        <article class="panel glitch-shell" aria-live="polite">
+          <div class="glitch-card" id="glitchCard">
+            <i class="fa-solid fa-plus corner tl"></i>
+            <i class="fa-solid fa-plus corner tr"></i>
+            <i class="fa-solid fa-plus corner bl"></i>
+            <i class="fa-solid fa-plus corner br"></i>
+            <div class="glitch-frame">
+              <div class="glitch-icon">
+                <i class="fa-solid fa-bolt-lightning"></i>
               </div>
-              <div class="download-item">
-                <span>Windows (NSIS)</span>
-                <code>MyWeb-${"{version}"}-win-${"{arch}"}.exe</code>
-              </div>
-              <div class="download-item">
-                <span>Linux (AppImage)</span>
-                <code>MyWeb-${"{version}"}-linux-${"{arch}"}.AppImage</code>
+              <div class="glitch-text" id="glitchText"></div>
+              <div class="glitch-prompts">
+                <p><strong>Goal:</strong> A futuristic text glitch hover effect.</p>
+                <p><strong>Styles:</strong> Single square card, white borders, Font Awesome corners.</p>
+                <p><strong>Logic:</strong> Hover to reveal and scramble faint text with a moving gradient mask.</p>
               </div>
             </div>
           </div>

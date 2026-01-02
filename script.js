@@ -3,6 +3,9 @@ const searchInput = document.getElementById("searchInput");
 const definitionResults = document.getElementById("definitionResults");
 const helperText = document.getElementById("helperText");
 const clearButton = document.getElementById("clearButton");
+const glitchCard = document.getElementById("glitchCard");
+const glitchText = document.getElementById("glitchText");
+const trailCanvas = document.getElementById("trail-canvas");
 
 document.documentElement.classList.add("dark");
 
@@ -101,3 +104,84 @@ document.addEventListener("keydown", (event) => {
 
 window.addEventListener("popstate", syncFromQuery);
 syncFromQuery();
+
+// --- Glitch card logic ---
+function randomString(length = 400) {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < length; i += 1) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+    if ((i + 1) % 32 === 0) result += "\n";
+  }
+  return result;
+}
+
+if (glitchCard && glitchText) {
+  glitchText.textContent = randomString();
+  glitchCard.addEventListener("mousemove", (event) => {
+    const rect = glitchCard.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    glitchText.style.setProperty("--gx", `${x}%`);
+    glitchText.style.setProperty("--gy", `${y}%`);
+    glitchText.textContent = randomString();
+    glitchText.style.opacity = 1;
+  });
+
+  glitchCard.addEventListener("mouseleave", () => {
+    glitchText.style.opacity = 0;
+  });
+}
+
+// --- Magic star trail ---
+const ctx = trailCanvas.getContext("2d");
+let particles = [];
+
+function resizeCanvas() {
+  trailCanvas.width = window.innerWidth;
+  trailCanvas.height = window.innerHeight;
+}
+
+function addParticles(x, y) {
+  for (let i = 0; i < 6; i += 1) {
+    particles.push({
+      x,
+      y,
+      vy: 1.5 + Math.random() * 2.5,
+      vx: (Math.random() - 0.5) * 0.6,
+      size: 2 + Math.random() * 3,
+      alpha: 0.9,
+      glow: Math.random() * 0.5 + 0.5,
+      hue: Math.random() > 0.5 ? 210 : 195,
+    });
+  }
+}
+
+function updateParticles() {
+  ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+  particles = particles.filter((p) => p.alpha > 0.02);
+  particles.forEach((p) => {
+    p.y += p.vy;
+    p.x += p.vx;
+    p.alpha *= 0.96;
+    ctx.beginPath();
+    const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y + 8, 16);
+    const baseColor = `hsla(${p.hue}, 90%, 70%, ${p.alpha * 0.8})`;
+    gradient.addColorStop(0, baseColor);
+    gradient.addColorStop(1, `hsla(${p.hue}, 90%, 60%, 0)`);
+    ctx.fillStyle = gradient;
+    ctx.shadowColor = `rgba(59,130,246,${p.glow})`;
+    ctx.shadowBlur = 10;
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  requestAnimationFrame(updateParticles);
+}
+
+window.addEventListener("mousemove", (event) => {
+  addParticles(event.clientX, event.clientY);
+});
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+updateParticles();
