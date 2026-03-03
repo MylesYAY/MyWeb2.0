@@ -1,17 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
+<html lang="en" class="dark"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MyWeb | Search Everything</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <canvas id="trail-canvas"></canvas>
+  <canvas id="trail-canvas" width="1389" height="992"></canvas>
   <div class="page">
     <header class="top-bar">
       <div class="brand">
@@ -37,14 +35,14 @@
           <form id="searchForm" class="search-form" autocomplete="off">
             <div class="input-wrap">
               <span class="icon">🔎</span>
-              <input id="searchInput" type="text" name="query" placeholder="Search Wikipedia..." required>
+              <input id="searchInput" type="text" name="query" placeholder="Search Wikipedia..." required="">
             </div>
             <div class="button-row">
               <button type="submit" class="pill primary">Go</button>
               <button type="button" id="clearButton" class="pill ghost">Clear</button>
             </div>
           </form>
-          <div class="helper" id="helperText"></div>
+          <div class="helper" id="helperText">Tip: Press Ctrl/Cmd + K to focus the search.</div>
         </div>
       </section>
 
@@ -57,34 +55,15 @@
             </div>
             <span class="sparkle">✨</span>
           </header>
-          <div id="definitionResults" class="panel-body empty boxed">
-            <p>Start typing to explore definitions.</p>
-          </div>
+          <div id="definitionResults" class="panel-body empty boxed"><p>Start typing to explore definitions.</p></div>
         </article>
 
-        <article class="panel glitch-shell" aria-live="polite">
-          <div class="glitch-card" id="glitchCard">
-            <i class="fa-solid fa-plus corner tl"></i>
-            <i class="fa-solid fa-plus corner tr"></i>
-            <i class="fa-solid fa-plus corner bl"></i>
-            <i class="fa-solid fa-plus corner br"></i>
-            <div class="glitch-frame">
-              <div class="glitch-icon">
-                <i class="fa-solid fa-bolt-lightning"></i>
-              </div>
-              <div class="glitch-text" id="glitchText"></div>
-              <div class="glitch-prompts">
-                <p><strong>Goal:</strong> A futuristic text glitch hover effect.</p>
-                <p><strong>Styles:</strong> Single square card, white borders, Font Awesome corners.</p>
-                <p><strong>Logic:</strong> Hover to reveal and scramble faint text with a moving gradient mask.</p>
-              </div>
-            </div>
-          </div>
-        </article>
+        
       </section>
     </main>
   </div>
 
   <script src="script.js"></script>
-</body>
-</html>
+
+
+</body></html>
