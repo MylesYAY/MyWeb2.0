@@ -3,8 +3,6 @@ const searchInput = document.getElementById("searchInput");
 const definitionResults = document.getElementById("definitionResults");
 const helperText = document.getElementById("helperText");
 const clearButton = document.getElementById("clearButton");
-const glitchCard = document.getElementById("glitchCard");
-const glitchText = document.getElementById("glitchText");
 const trailCanvas = document.getElementById("trail-canvas");
 
 document.documentElement.classList.add("dark");
@@ -104,34 +102,6 @@ document.addEventListener("keydown", (event) => {
 
 window.addEventListener("popstate", syncFromQuery);
 syncFromQuery();
-
-// --- Glitch card logic ---
-function randomString(length = 400) {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-  for (let i = 0; i < length; i += 1) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-    if ((i + 1) % 32 === 0) result += "\n";
-  }
-  return result;
-}
-
-if (glitchCard && glitchText) {
-  glitchText.textContent = randomString();
-  glitchCard.addEventListener("mousemove", (event) => {
-    const rect = glitchCard.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width) * 100;
-    const y = ((event.clientY - rect.top) / rect.height) * 100;
-    glitchText.style.setProperty("--gx", `${x}%`);
-    glitchText.style.setProperty("--gy", `${y}%`);
-    glitchText.textContent = randomString();
-    glitchText.style.opacity = 1;
-  });
-
-  glitchCard.addEventListener("mouseleave", () => {
-    glitchText.style.opacity = 0;
-  });
-}
 
 // --- Magic star trail ---
 const ctx = trailCanvas.getContext("2d");
