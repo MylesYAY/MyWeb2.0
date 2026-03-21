@@ -1,0 +1,69 @@
+<html lang="en" class="dark"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyWeb | Search Everything</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="trail-canvas" width="1389" height="992"></canvas>
+  <div class="page">
+    <header class="top-bar">
+      <div class="brand">
+        <div class="logo">M</div>
+        <div class="brand-text">
+          <span class="brand-name">MyWeb</span>
+          <span class="brand-sub">Slick, modern, and blue.</span>
+        </div>
+      </div>
+      <div class="actions"></div>
+    </header>
+
+    <main class="content">
+      <section class="hero">
+        <div class="hero-title">
+          <span class="gradient">Discover</span>
+          <span>with MyWeb</span>
+        </div>
+        <p class="hero-subtitle">
+          Search Wikipedia definitions—styled with a blue accent, Google-inspired layout, and deep-linkable URLs.
+        </p>
+        <div class="search-card">
+          <form id="searchForm" class="search-form" autocomplete="off">
+            <div class="input-wrap">
+              <span class="icon">🔎</span>
+              <input id="searchInput" type="text" name="query" placeholder="Search Wikipedia..." required="">
+            </div>
+            <div class="button-row">
+              <button type="submit" class="pill primary">Go</button>
+              <button type="button" id="clearButton" class="pill ghost">Clear</button>
+            </div>
+          </form>
+          <div class="helper" id="helperText">Tip: Press Ctrl/Cmd + K to focus the search.</div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="panel boxed" aria-live="polite">
+          <header class="panel-head">
+            <div>
+              <p class="eyebrow">Definitions</p>
+              <h2>Wikipedia Search</h2>
+            </div>
+            <span class="sparkle">✨</span>
+          </header>
+          <div id="definitionResults" class="panel-body empty boxed"><p>Start typing to explore definitions.</p></div>
+        </article>
+
+        
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+
+
+</body></html>
